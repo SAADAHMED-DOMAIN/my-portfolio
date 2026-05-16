@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+@theme {
+  --color-electric-blue: #2563eb;
+  --color-electric-blue-hover: #1d4ed8;
+  --color-electric-blue-light: #60a5fa;
+  --color-electric-blue-dim: rgba(37, 99, 235, 0.12);
+  --color-matte-black: #080809;
+  --color-charcoal: #111114;
+  --color-charcoal-light: #1c1d22;
+  --color-surface: #13141a;
+  --color-surface-raised: #1a1b22;
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-border-blue: rgba(37, 99, 235, 0.3);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --background: var(--color-matte-black);
+  --foreground: #f0f1f5;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-matte-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-charcoal-light);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-electric-blue);
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.28);
+  color: #fff;
+}
+
+/* ─── Utilities ─────────────────────────────────────────────────── */
+
+@utility glass {
+  background: rgba(19, 20, 26, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+@utility text-gradient {
+  background: linear-gradient(135deg, #e2e8f0 0%, var(--color-electric-blue-light) 60%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glow {
+  box-shadow: 0 0 24px rgba(37, 99, 235, 0.35), 0 0 8px rgba(37, 99, 235, 0.18);
+}
+
+@utility glow-sm {
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.22);
+}
+
+/* ─── Typography ──────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
