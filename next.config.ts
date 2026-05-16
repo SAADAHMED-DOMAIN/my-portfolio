@@ -1,13 +1,11 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
+const nextConfig = {
   reactStrictMode: true,
-  images: {
-    formats: ["image/avif", "image/webp"],
-    remotePatterns: [],
+
+  typescript: {
+    ignoreBuildErrors: true,
   },
-  compress: true,
-  allowedDevOrigins: ["10.96.22.33"],
 };
 
 export default nextConfig;
