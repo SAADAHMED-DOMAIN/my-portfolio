@@ -1,36 +1,153 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Faijan Web3 Portfolio
 
-## Getting Started
+Modern Web3 & Blockchain developer portfolio built with Next.js, TypeScript, and Tailwind CSS.
 
-First, run the development server:
+🌐 Live Website: [https://faijan.in](https://faijan.in)
+
+---
+
+## 🚀 About The Project
+
+This is my personal blockchain developer portfolio designed to showcase my Web3 projects, smart contract work, frontend skills, and full-stack development experience.
+
+The portfolio focuses on modern UI/UX, responsive design, clean animations, and scalable architecture while highlighting blockchain-based applications and decentralized systems.
+
+The project was built to strengthen my production deployment workflow, frontend engineering skills, and Web3 integration experience.
+
+---
+
+## ✨ Features
+
+* Modern and responsive UI
+* Smooth animations and transitions
+* Web3-focused developer portfolio
+* Project showcase section
+* Skills & technology stack section
+* Contact form integration
+* Custom domain deployment
+* Optimized for desktop and mobile devices
+* SEO-friendly structure
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* Next.js
+* React.js
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+
+### Web3 & Blockchain
+
+* Solidity
+* Ethereum
+* Ethers.js
+* Smart Contracts
+
+### Deployment & Tools
+
+* Vercel
+* Git & GitHub
+* Resend API
+
+---
+
+## 📂 Featured Projects
+
+### 🔹 DAO Governance System
+
+A decentralized governance platform that enables proposal creation, voting, and transparent decision-making using blockchain technology.
+
+### 🔹 Decentralized Crowdfunding Platform
+
+A blockchain-powered crowdfunding platform that allows secure and transparent fundraising using smart contracts.
+
+### 🔹 Crypto Portfolio Tracker
+
+A responsive crypto portfolio tracking application with modern UI and real-time market integration.
+
+---
+
+## 📸 Portfolio Preview
+
+<img width="100%" alt="Portfolio Preview" src="https://placehold.co/1200x700/0f172a/ffffff?text=Faijan+Web3+Portfolio" />
+
+---
+
+## ⚙️ Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/FAIJANANWAR/faijan-web3-portfolio.git
+```
+
+Move into the project directory:
+
+```bash
+cd faijan-web3-portfolio
+```
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build for production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🌐 Deployment
 
-To learn more about Next.js, take a look at the following resources:
+The project is deployed using Vercel.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Live URL:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+[https://faijan.in](https://faijan.in)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📬 Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Faijan Anwar
+
+* Portfolio: [https://faijan.in](https://faijan.in)
+* GitHub: [https://github.com/FAIJANANWAR](https://github.com/FAIJANANWAR)
+* X (Twitter): [https://x.com/FaijanAnwar](https://x.com/FaijanAnwar)
+* LinkedIn: Add your LinkedIn profile URL here
+
+---
+
+## 📈 Future Improvements
+
+* Add advanced Web3 integrations
+* Improve smart contract interaction features
+* Add project case studies
+* Integrate blog/articles section
+* Add dark/light theme toggle improvements
+
+---
+
+## ⭐ Support
+
+If you like this project, consider giving it a star on GitHub.
+
+---
+
+## 📄 License
+
+This project is open-source and
