@@ -3,7 +3,7 @@ import { FiGithub, FiLinkedin, FiTwitter, FiInstagram } from "react-icons/fi";
 
 const socialLinks = [
   { icon: FiGithub, href: "https://github.com/faijananwar", label: "GitHub", hoverColor: "hover:text-white" },
-  { icon: FiLinkedin, href: "https://linkedin.com/in/faijananwar", label: "LinkedIn", hoverColor: "hover:text-[#0a66c2]" },
+  { icon: FiLinkedin, href: "https://www.linkedin.com/in/faijan-anwar/", label: "LinkedIn", hoverColor: "hover:text-[#0a66c2]" },
   { icon: FiTwitter, href: "https://x.com/faijananwar", label: "X (Twitter)", hoverColor: "hover:text-white" },
   { icon: FiInstagram, href: "https://www.instagram.com/anwar_faiz_?igsh=MTM5bXgyZ3A0cm9lcQ==", label: "Instagram", hoverColor: "hover:text-pink-400" },
 ];

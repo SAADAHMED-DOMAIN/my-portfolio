@@ -65,7 +65,7 @@ export default function Navbar() {
               <FiGithub className="w-4 h-4" />
             </a>
             <a
-              href="https://linkedin.com/in/faijananwar"
+              href="https://www.linkedin.com/in/faijan-anwar/"
               target="_blank"
               rel="noreferrer"
               className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[#0a66c2] rounded-lg hover:bg-white/5 transition-all"
