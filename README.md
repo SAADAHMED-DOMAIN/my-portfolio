@@ -2,7 +2,7 @@
 
 Modern Web3 & Blockchain developer portfolio built with Next.js, TypeScript, and Tailwind CSS.
 
-🌐 Live Website: [https://faijan.in](https://faijan.in)
+🌐 Live Website: [https://faijan.in](https://imaginit.dev)
 
 ---
 
