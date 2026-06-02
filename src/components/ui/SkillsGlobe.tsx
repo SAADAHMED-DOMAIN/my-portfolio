@@ -51,21 +51,20 @@ const TWO_PI = Math.PI * 2;
 const PHI = (1 + Math.sqrt(5)) / 2;
 
 // Physics
-const BASE_OMEGA = TWO_PI / 90; // Full 360° rotation in 90 seconds ≈ 0.0698 rad/s
-const DAMPING_B = Math.log(100) / 2; // ≈ 2.3026 — impulse drops to 1% in ~2s
-const IMPULSE_SENSITIVITY = 1.0; // Tuned scale: px/ms → rad/s
-const STALE_THRESHOLD_MS = 100; // If pointer idle >100ms before release, zero impulse
-const DRAG_SMOOTH = 0.35; // Velocity smoothing factor (0 = no smoothing, 1 = full)
+const BASE_OMEGA = TWO_PI / 90;
+const DAMPING_B = Math.log(100) / 2;
+const IMPULSE_SENSITIVITY = 1.0;
+const STALE_THRESHOLD_MS = 100;
+const DRAG_SMOOTH = 0.35;
 
 // Visual
 const PERSPECTIVE = 800;
-const RADIUS_RATIO = 0.34; // Sphere radius as fraction of min(width, height)
-const NODE_EXTRUSION = 0.25; // How far nodes float above sphere surface
-const ICON_SIZE = 32; // Base icon pixel size
-const SUBDIVISION_LEVEL = 2; // Icosahedron subdivision → 162 verts, 320 faces
+const RADIUS_RATIO = 0.34;
+const NODE_EXTRUSION = 0.25;
+const ICON_SIZE = 32;
+const SUBDIVISION_LEVEL = 1; // Reduced from 2→1: 42 verts, 80 faces, 120 edges (vs 162/320/480)
 
-// Colors
-const WIRE_GLOW_COLOR = "rgba(255, 80, 50, 0.12)";
+// Colors — pre-computed RGBA strings to avoid per-frame string concatenation
 const LABEL_FRONT = "rgba(220, 220, 230, 0.92)";
 const LABEL_BACK = "rgba(220, 220, 230, 0.22)";
 
@@ -235,6 +234,25 @@ function loadIconImage(skill: Skill): Promise<HTMLImageElement> {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+//  Pre-compute alpha lookup tables to avoid per-draw string allocation
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const ALPHA_STEPS = 32;
+const faceAlphaLUT: string[] = [];
+const edgeAlphaLUT: string[] = [];
+for (let i = 0; i < ALPHA_STEPS; i++) {
+  const t = i / (ALPHA_STEPS - 1);
+  const faceA = 0.012 + t * 0.035;
+  const edgeA = 0.05 + t * 0.16;
+  faceAlphaLUT.push(`rgba(255, 80, 50, ${faceA.toFixed(4)})`);
+  edgeAlphaLUT.push(`rgba(255, 80, 50, ${edgeA.toFixed(4)})`);
+}
+
+function alphaIndex(depthNorm: number): number {
+  return Math.min(ALPHA_STEPS - 1, Math.max(0, (depthNorm * (ALPHA_STEPS - 1)) | 0));
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
 //  React Component
 // ═══════════════════════════════════════════════════════════════════════════════
 
@@ -246,17 +264,18 @@ export default function SkillsGlobe() {
     const container = containerRef.current;
     const canvas = canvasRef.current;
     if (!container || !canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     // ── Mutable State ────────────────────────────────────────────────────────
     let rotY = 0;
-    let rotXAngle = -0.2; // Slight initial tilt for a 3/4 view
+    let rotXAngle = -0.2;
     let impulseY = 0;
     let impulseX = 0;
     let animId = 0;
     let lastFrameTime = performance.now();
     let hoveredIdx = -1;
+    let isVisible = true;
 
     const drag: DragState = {
       active: false,
@@ -271,7 +290,6 @@ export default function SkillsGlobe() {
     const geo = buildGeodesic(SUBDIVISION_LEVEL);
 
     // ── Build Skill Nodes ────────────────────────────────────────────────────
-    // ALL nodes distributed via Fibonacci sphere, extruded above the mesh hull
     const fibPts = fibonacciSphere(skills.length, 0.05);
     const nodes: SkillNode[] = skills.map((skill, i) => ({
       position: v3(
@@ -311,6 +329,19 @@ export default function SkillsGlobe() {
     const ro = new ResizeObserver(resize);
     ro.observe(container);
 
+    // ── IntersectionObserver: pause rendering when offscreen ─────────────────
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        if (isVisible) {
+          lastFrameTime = performance.now(); // reset delta to prevent jump
+          animId = requestAnimationFrame(render);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    io.observe(container);
+
     // ── Pointer Event Handlers ───────────────────────────────────────────────
     function onPointerDown(e: PointerEvent) {
       drag.active = true;
@@ -330,18 +361,15 @@ export default function SkillsGlobe() {
 
       if (drag.active) {
         const now = performance.now();
-        const dt = Math.max(now - drag.lastTime, 1); // ms
+        const dt = Math.max(now - drag.lastTime, 1);
         const dx = e.clientX - drag.lastX;
         const dy = e.clientY - drag.lastY;
 
-        // Smoothed velocity tracking (exponential moving average)
         const instantVelY = dx / dt;
         const instantVelX = dy / dt;
         drag.velY = drag.velY * DRAG_SMOOTH + instantVelY * (1 - DRAG_SMOOTH);
         drag.velX = drag.velX * DRAG_SMOOTH + instantVelX * (1 - DRAG_SMOOTH);
 
-        // Apply direct rotation while dragging
-        // NEGATED dx so horizontal motion follows cursor direction
         rotY -= dx * 0.005;
         rotXAngle += dy * 0.003;
         rotXAngle = Math.max(-1.2, Math.min(1.2, rotXAngle));
@@ -350,7 +378,6 @@ export default function SkillsGlobe() {
         drag.lastY = e.clientY;
         drag.lastTime = now;
       } else {
-        // Hover hit-test
         hitTest(mx, my);
       }
     }
@@ -360,12 +387,9 @@ export default function SkillsGlobe() {
         drag.active = false;
         const elapsed = performance.now() - drag.lastTime;
         if (elapsed > STALE_THRESHOLD_MS) {
-          // User paused before releasing — no momentum
           impulseY = 0;
           impulseX = 0;
         } else {
-          // Convert px/ms velocity → rad/s angular impulse
-          // NEGATED Y impulse to match corrected drag direction
           impulseY = -drag.velY * IMPULSE_SENSITIVITY;
           impulseX = drag.velX * IMPULSE_SENSITIVITY * 0.4;
         }
@@ -373,7 +397,7 @@ export default function SkillsGlobe() {
       }
     }
 
-    function onClick(e: MouseEvent) {
+    function onClick() {
       if (hoveredIdx >= 0) {
         window.open(nodes[hoveredIdx].skill.url, "_blank", "noopener,noreferrer");
       }
@@ -392,12 +416,10 @@ export default function SkillsGlobe() {
       hoveredIdx = -1;
       const hitR = ICON_SIZE * 0.75;
 
-      // Check front-most nodes first (iterate from end of back-to-front array)
       for (let i = projectedNodes.length - 1; i >= 0; i--) {
         const p = projectedNodes[i];
         const w = canvas!.width / dpr;
         const radius = Math.min(w, canvas!.height / dpr) * RADIUS_RATIO;
-        // Only interact with front-hemisphere nodes
         if (p.depth > radius * 0.2) continue;
         const dx = mx - p.x;
         const dy = my - p.y;
@@ -410,10 +432,20 @@ export default function SkillsGlobe() {
       canvas!.style.cursor = hoveredIdx >= 0 ? "pointer" : "grab";
     }
 
+    // ── Pre-allocate reusable arrays ──────────────────────────────────────────
+    const tVertsArr: Vec3[] = new Array(geo.vertices.length);
+    const pVertsArr: { x: number; y: number; scale: number; depth: number }[] = new Array(geo.vertices.length);
+    for (let i = 0; i < geo.vertices.length; i++) {
+      tVertsArr[i] = v3(0, 0, 0);
+      pVertsArr[i] = { x: 0, y: 0, scale: 0, depth: 0 };
+    }
+
     // ── Render Loop ──────────────────────────────────────────────────────────
     function render() {
+      if (!isVisible) return; // Don't schedule next frame if offscreen
+
       const now = performance.now();
-      const dt = Math.min((now - lastFrameTime) / 1000, 0.1); // seconds, capped
+      const dt = Math.min((now - lastFrameTime) / 1000, 0.1);
       lastFrameTime = now;
 
       const w = canvas!.width / dpr;
@@ -424,12 +456,9 @@ export default function SkillsGlobe() {
 
       // ── Physics update ─────────────────────────────────────────────────
       if (!drag.active) {
-        // ω(t) = ω_default + ω_impulse · e^(-b·t)
         rotY += (BASE_OMEGA + impulseY) * dt;
         rotXAngle += impulseX * dt;
         rotXAngle = Math.max(-1.2, Math.min(1.2, rotXAngle));
-
-        // Exponential damped decay
         const decay = Math.exp(-DAMPING_B * dt);
         impulseY *= decay;
         impulseX *= decay;
@@ -438,90 +467,78 @@ export default function SkillsGlobe() {
       // ── Clear ──────────────────────────────────────────────────────────
       ctx!.clearRect(0, 0, w, h);
 
-      // ── Ambient center glow ────────────────────────────────────────────
-      const glow = ctx!.createRadialGradient(cx, cy, 0, cx, cy, radius * 1.6);
-      glow.addColorStop(0, "rgba(255, 80, 50, 0.04)");
-      glow.addColorStop(0.5, "rgba(255, 80, 50, 0.015)");
-      glow.addColorStop(1, "transparent");
-      ctx!.fillStyle = glow;
-      ctx!.fillRect(0, 0, w, h);
+      // ── Transform mesh vertices (in-place, no allocation) ──────────────
+      const cosY = Math.cos(rotY), sinY = Math.sin(rotY);
+      const cosX = Math.cos(rotXAngle), sinX = Math.sin(rotXAngle);
 
-      // ── Transform mesh vertices ────────────────────────────────────────
-      const tVerts = geo.vertices.map((v) => {
-        let tv = rotateY(v, rotY);
-        tv = rotateX(tv, rotXAngle);
-        return v3(tv.x * radius, tv.y * radius, tv.z * radius);
-      });
-      const pVerts = tVerts.map((v) => project(v, PERSPECTIVE, cx, cy));
-
-      // ── Draw mesh faces (translucent, back-to-front) ───────────────────
-      const sortedFaces = geo.faces
-        .map((f) => ({
-          ...f,
-          avgZ: (tVerts[f.a].z + tVerts[f.b].z + tVerts[f.c].z) / 3,
-        }))
-        .sort((a, b) => b.avgZ - a.avgZ);
-
-      ctx!.save();
-      for (const face of sortedFaces) {
-        const pa = pVerts[face.a];
-        const pb = pVerts[face.b];
-        const pc = pVerts[face.c];
-        const depthNorm = 1 - (face.avgZ / radius + 1) / 2; // 0→back, 1→front
-        const alpha = 0.012 + depthNorm * 0.035;
-
-        ctx!.beginPath();
-        ctx!.moveTo(pa.x, pa.y);
-        ctx!.lineTo(pb.x, pb.y);
-        ctx!.lineTo(pc.x, pc.y);
-        ctx!.closePath();
-        ctx!.fillStyle = `rgba(255, 80, 50, ${alpha})`;
-        ctx!.fill();
+      for (let i = 0; i < geo.vertices.length; i++) {
+        const v = geo.vertices[i];
+        // rotateY
+        const rx = v.x * cosY + v.z * sinY;
+        const ry = v.y;
+        const rz = -v.x * sinY + v.z * cosY;
+        // rotateX
+        const fx = rx;
+        const fy = ry * cosX - rz * sinX;
+        const fz = ry * sinX + rz * cosX;
+        // scale
+        const sx = fx * radius;
+        const sy = fy * radius;
+        const sz = fz * radius;
+        tVertsArr[i].x = sx;
+        tVertsArr[i].y = sy;
+        tVertsArr[i].z = sz;
+        // project
+        const scale = PERSPECTIVE / (PERSPECTIVE + sz);
+        pVertsArr[i].x = cx + sx * scale;
+        pVertsArr[i].y = cy + sy * scale;
+        pVertsArr[i].scale = scale;
+        pVertsArr[i].depth = sz;
       }
-      ctx!.restore();
 
-      // ── Draw mesh wireframe edges ──────────────────────────────────────
-      ctx!.save();
-      ctx!.shadowColor = WIRE_GLOW_COLOR;
-      ctx!.shadowBlur = 3;
-      ctx!.lineWidth = 0.5;
-
+      // ── Draw mesh wireframe edges (NO shadowBlur — major perf win) ─────
+      ctx!.lineWidth = 0.6;
       for (const [i, j] of geo.edges) {
-        const pa = pVerts[i];
-        const pb = pVerts[j];
-        const avgZ = (tVerts[i].z + tVerts[j].z) / 2;
+        const pa = pVertsArr[i];
+        const pb = pVertsArr[j];
+        const avgZ = (tVertsArr[i].z + tVertsArr[j].z) / 2;
         const depthNorm = 1 - (avgZ / radius + 1) / 2;
-        const alpha = 0.05 + depthNorm * 0.16;
 
         ctx!.beginPath();
         ctx!.moveTo(pa.x, pa.y);
         ctx!.lineTo(pb.x, pb.y);
-        ctx!.strokeStyle = `rgba(255, 80, 50, ${alpha})`;
+        ctx!.strokeStyle = edgeAlphaLUT[alphaIndex(depthNorm)];
         ctx!.stroke();
       }
-      ctx!.restore();
 
       // ── Transform & project skill nodes ────────────────────────────────
       projectedNodes = nodes.map((node, idx) => {
-        let tv = rotateY(node.position, rotY);
-        tv = rotateX(tv, rotXAngle);
-        const scaled = v3(tv.x * radius, tv.y * radius, tv.z * radius);
-        const p = project(scaled, PERSPECTIVE, cx, cy);
-        return { ...p, nodeIndex: idx };
+        const v = node.position;
+        const rx = v.x * cosY + v.z * sinY;
+        const ry = v.y;
+        const rz = -v.x * sinY + v.z * cosY;
+        const fx = rx;
+        const fy = ry * cosX - rz * sinX;
+        const fz = ry * sinX + rz * cosX;
+        const sx = fx * radius, sy = fy * radius, sz = fz * radius;
+        const scale = PERSPECTIVE / (PERSPECTIVE + sz);
+        return {
+          x: cx + sx * scale,
+          y: cy + sy * scale,
+          scale,
+          depth: sz,
+          nodeIndex: idx,
+        };
       });
-      // Sort back-to-front (painter's algorithm)
       projectedNodes.sort((a, b) => b.depth - a.depth);
 
       // ── Draw skill nodes ───────────────────────────────────────────────
-      ctx!.save();
       ctx!.textAlign = "center";
       ctx!.textBaseline = "top";
-      ctx!.imageSmoothingEnabled = true;
-      ctx!.imageSmoothingQuality = "high";
 
       for (const pn of projectedNodes) {
         const node = nodes[pn.nodeIndex];
-        const depthNorm = (pn.depth / radius + 1) / 2; // 0→front, 1→back
+        const depthNorm = (pn.depth / radius + 1) / 2;
         const opacity = Math.max(0.12, 1 - depthNorm * 0.88);
         const iconScale = pn.scale * (0.65 + (1 - depthNorm) * 0.55);
         const size = ICON_SIZE * iconScale;
@@ -529,17 +546,13 @@ export default function SkillsGlobe() {
 
         ctx!.globalAlpha = opacity;
 
-        // Hover glow
+        // Hover glow (lightweight — no shadowBlur)
         if (isHovered && depthNorm < 0.6) {
-          ctx!.save();
-          ctx!.globalAlpha = 1;
-          ctx!.shadowColor = "rgba(255, 255, 255, 0.35)";
-          ctx!.shadowBlur = 18;
+          ctx!.globalAlpha = 0.12;
           ctx!.beginPath();
-          ctx!.arc(pn.x, pn.y, size * 0.65, 0, TWO_PI);
-          ctx!.fillStyle = "rgba(255, 255, 255, 0.06)";
+          ctx!.arc(pn.x, pn.y, size * 0.8, 0, TWO_PI);
+          ctx!.fillStyle = "rgba(255, 255, 255, 0.5)";
           ctx!.fill();
-          ctx!.restore();
           ctx!.globalAlpha = 1;
         }
 
@@ -553,7 +566,6 @@ export default function SkillsGlobe() {
             size
           );
         } else {
-          // Placeholder circle while loading
           ctx!.beginPath();
           ctx!.arc(pn.x, pn.y, size * 0.3, 0, TWO_PI);
           ctx!.fillStyle = `rgba(255, 255, 255, ${opacity * 0.15})`;
@@ -562,7 +574,7 @@ export default function SkillsGlobe() {
 
         // Label
         const fontSize = Math.max(8, 11 * iconScale);
-        ctx!.font = `500 ${fontSize.toFixed(1)}px ui-monospace, SFMono-Regular, "SF Mono", monospace`;
+        ctx!.font = `500 ${fontSize | 0}px ui-monospace, SFMono-Regular, "SF Mono", monospace`;
         ctx!.fillStyle =
           isHovered && depthNorm < 0.6
             ? "#ffffff"
@@ -575,7 +587,6 @@ export default function SkillsGlobe() {
       }
 
       ctx!.globalAlpha = 1;
-      ctx!.restore();
 
       animId = requestAnimationFrame(render);
     }
@@ -586,6 +597,7 @@ export default function SkillsGlobe() {
     return () => {
       cancelAnimationFrame(animId);
       ro.disconnect();
+      io.disconnect();
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       canvas.removeEventListener("pointerup", onPointerUp);
@@ -595,7 +607,7 @@ export default function SkillsGlobe() {
   }, []);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden glass border border-white/[0.06] shadow-2xl">
+    <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden bg-[rgba(19,20,26,0.75)] border border-white/[0.06] shadow-2xl">
       {/* Grid background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:32px_32px]" />
@@ -627,7 +639,7 @@ export default function SkillsGlobe() {
 
       {/* Footer capsule badge */}
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 backdrop-blur-md shadow-lg">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-black/40 shadow-lg">
           <Globe className="w-4 h-4 text-gray-400" />
           <span className="text-sm font-medium text-gray-300">
             Drag to explore skills universe

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import FadeInView from "@/components/ui/FadeInView";
 
 const highlights = [
@@ -23,10 +24,12 @@ export default function About() {
             <div className="aspect-square max-w-sm mx-auto lg:mx-0 relative rounded-2xl overflow-hidden glass p-1.5">
               <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-electric-blue)]/15 to-transparent z-10 rounded-2xl pointer-events-none" />
               <div className="w-full h-full bg-[var(--color-charcoal)] rounded-xl overflow-hidden relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src="/Profilepicture.png"
                   alt="Saad Ahmed — Automation Engineer"
+                  width={400}
+                  height={400}
+                  priority={false}
                   className="object-cover object-center transition-all duration-700 w-full h-full"
                 />
               </div>

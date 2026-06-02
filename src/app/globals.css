@@ -64,9 +64,7 @@ body {
 /* ─── Utilities ─────────────────────────────────────────────────── */
 
 @utility glass {
-  background: rgba(19, 20, 26, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(19, 20, 26, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { FiGithub, FiLinkedin, FiInstagram } from "react-icons/fi";
@@ -36,7 +37,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="font-display text-[1.05rem] font-bold tracking-tight text-white flex items-center gap-2.5 group">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[rgba(37,99,235,0.5)] group-hover:border-[var(--color-electric-blue)] transition-colors">
-            <img src="/Profilepicture.png" alt="Saad Ahmed" className="object-cover w-full h-full" />
+            <Image src="/Profilepicture.png" alt="Saad Ahmed" width={32} height={32} className="object-cover w-full h-full" />
           </div>
           <span>Saad Ahmed</span>
         </Link>
