@@ -1,9 +1,9 @@
 import FadeInView from "@/components/ui/FadeInView";
 
 const highlights = [
-  { value: "2+", label: "Years in Web3" },
-  { value: "10+", label: "dApps Built" },
-  { value: "200+", label: "Project Tested" },
+  { value: "1+", label: "Years in Automation" },
+  { value: "1+", label: "Systems Engineered" },
+  { value: "90%", label: "Cost Reduction" },
 ];
 
 export default function About() {
@@ -25,9 +25,9 @@ export default function About() {
               <div className="w-full h-full bg-[var(--color-charcoal)] rounded-xl overflow-hidden relative">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/profile.jpg"
-                  alt="Faijan Anwar — Blockchain Developer"
-                  className="object-cover object-center grayscale hover:grayscale-0 transition-all duration-700 w-full h-full"
+                  src="/Profilepicture.png"
+                  alt="Saad Ahmed — Automation Engineer"
+                  className="object-cover object-center transition-all duration-700 w-full h-full"
                 />
               </div>
             </div>
@@ -38,13 +38,13 @@ export default function About() {
           {/* Content */}
           <FadeInView direction="right" delay={0.25} className="flex flex-col gap-5">
             <p className="text-gray-300 text-base sm:text-lg leading-relaxed">
-              Passionate Blockchain Developer focused on building scalable Web3 products and secure smart contract systems. I operate at the intersection of cryptography, distributed systems, and user experience.
+              Automation Engineer and Systems Architect specializing in agentic RPA pipelines, distributed infrastructure orchestration, and production-grade LLM integration. I operate at the intersection of intelligent automation, DevOps, and scalable systems design.
             </p>
             <p className="text-gray-400 text-base leading-relaxed">
-              I bring startup-grade engineering quality to every project — clean architecture, robust security practices, and frictionless user experiences. From DeFi protocols to DAO governance, I build products that work reliably at scale.
+              I bring startup-grade engineering quality to every project — clean architecture, robust infrastructure practices, and zero-downtime deployments. From LLM routers to ETL pipelines, I build systems that work reliably at scale with 99.9% uptime.
             </p>
             <p className="text-gray-400 text-base leading-relaxed">
-              Currently available for freelance contracts, audits, and full-time Web3 roles. Based in India, working globally.
+              Currently pursuing a Bachelor of Technology in Computer Science Engineering (2024-28) and available for freelance automation contracts and systems engineering roles. Based in India, working globally.
             </p>
 
             {/* Stats grid */}

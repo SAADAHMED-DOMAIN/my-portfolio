@@ -91,3 +91,10 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
+
+/* Skills globe wireframe sphere overlay */
+@utility globe-wireframe {
+  background: radial-gradient(circle, transparent 58%, rgba(255, 80, 50, 0.08) 59%, rgba(255, 80, 50, 0.04) 100%);
+  border: 1px solid rgba(255, 80, 50, 0.15);
+  border-radius: 50%;
+}

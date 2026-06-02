@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="#FF4438">
+  <!-- Classic Redis stacked-blocks logo (3 tilted rhombus layers) -->
+  <path d="M64 9.5L121.7 38.4L64 67.3L6.3 38.4L64 9.5Z" opacity="0.7"/>
+  <path d="M64 28.8L121.7 57.7L64 86.6L6.3 57.7L64 28.8Z" opacity="0.85"/>
+  <path d="M64 48.1L121.7 77L64 105.9L6.3 77L64 48.1Z"/>
+</svg>

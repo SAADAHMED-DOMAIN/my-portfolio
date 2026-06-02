@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { FiGithub, FiLinkedin, FiTwitter, FiInstagram } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiInstagram } from "react-icons/fi";
 
 const socialLinks = [
-  { icon: FiGithub, href: "https://github.com/faijananwar", label: "GitHub", hoverColor: "hover:text-white" },
-  { icon: FiLinkedin, href: "https://www.linkedin.com/in/faijan-anwar/", label: "LinkedIn", hoverColor: "hover:text-[#0a66c2]" },
-  { icon: FiTwitter, href: "https://x.com/faijananwar", label: "X (Twitter)", hoverColor: "hover:text-white" },
-  { icon: FiInstagram, href: "https://www.instagram.com/anwar_faiz_?igsh=MTM5bXgyZ3A0cm9lcQ==", label: "Instagram", hoverColor: "hover:text-pink-400" },
+  { icon: FiGithub, href: "https://github.com/SAADAHMED-DOMAIN", label: "GitHub", hoverColor: "hover:text-white" },
+  { icon: FiLinkedin, href: "https://www.linkedin.com/in/saad-undefined-b29333413/", label: "LinkedIn", hoverColor: "hover:text-[#0a66c2]" },
+  { icon: FiInstagram, href: "https://www.instagram.com/saadwithahmed/", label: "Instagram", hoverColor: "hover:text-pink-400" },
 ];
 
 const footerLinks = [
@@ -25,10 +24,10 @@ export default function Footer() {
           {/* Brand */}
           <div className="flex flex-col gap-4 max-w-xs">
             <Link href="/" className="font-display text-xl font-bold tracking-tight text-white">
-              Faijan Anwar
+              Saad Ahmed
             </Link>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Blockchain Developer building secure smart contracts and scalable Web3 products from India.
+              Automation Engineer & Systems Architect building agentic RPA pipelines and intelligent infrastructure.
             </p>
             <div className="flex gap-3 mt-1">
               {socialLinks.map(({ icon: Icon, href, label, hoverColor }) => (
@@ -63,8 +62,8 @@ export default function Footer() {
           {/* Contact quick links */}
           <div className="flex flex-col gap-3">
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest">Contact</p>
-            <a href="mailto:hello@faijan.in" className="text-sm text-gray-400 hover:text-white transition-colors">hello@faijan.in</a>
-            <a href="tel:7014702263" className="text-sm text-gray-400 hover:text-white transition-colors">+91 70147 02263</a>
+            <a href="mailto:wynorifik@gmail.com" className="text-sm text-gray-400 hover:text-white transition-colors">wynorifik@gmail.com</a>
+            <a href="tel:+919549954674" className="text-sm text-gray-400 hover:text-white transition-colors">+91 95499 54674</a>
             <span className="text-sm text-gray-600">India</span>
           </div>
         </div>
@@ -72,8 +71,8 @@ export default function Footer() {
         <div className="w-full h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent mb-8" />
 
         <div className="flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-600">
-          <p>© {currentYear} Faijan Anwar. All rights reserved.</p>
-          <p>Blockchain Developer &bull; Smart Contract Engineer</p>
+          <p>© {currentYear} Saad Ahmed. All rights reserved.</p>
+          <p>Automation Engineer &bull; Systems Architect</p>
         </div>
       </div>
     </footer>

@@ -21,57 +21,56 @@ const outfit = Outfit({
   weight: ["600", "700", "800"],
 });
 
-const siteUrl = "https://faijan.in";
+const siteUrl = "https://saadahmed.dev";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Faijan Anwar | Blockchain Developer & Smart Contract Engineer",
-    template: "%s | Faijan Anwar",
+    default: "Saad Ahmed | Automation Engineer & Systems Architect",
+    template: "%s | Saad Ahmed",
   },
   description:
-    "Faijan Anwar is a Blockchain Developer and Smart Contract Engineer building secure DeFi protocols, scalable dApps, and frictionless Web3 experiences. Available for freelance and full-time opportunities.",
+    "Saad Ahmed is an Automation Engineer and Systems Architect specializing in agentic RPA pipelines, distributed infrastructure orchestration, and production-grade LLM integrations.",
   keywords: [
-    "Blockchain Developer",
-    "Smart Contract Engineer",
-    "Solidity Developer",
-    "Web3 Developer",
-    "DeFi Developer",
-    "NFT Marketplace",
-    "DAO Governance",
-    "Ethereum Developer",
-    "Hardhat",
-    "Foundry",
-    "Next.js",
-    "Faijan Anwar",
+    "Automation Engineer",
+    "Systems Architect",
+    "RPA Pipelines",
+    "LLM Integration",
+    "Docker",
+    "Kubernetes",
+    "DevOps",
+    "Nginx",
+    "TypeScript",
+    "Python",
+    "Saad Ahmed",
     "India",
   ],
-  authors: [{ name: "Faijan Anwar", url: siteUrl }],
-  creator: "Faijan Anwar",
+  authors: [{ name: "Saad Ahmed", url: siteUrl }],
+  creator: "Saad Ahmed",
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteUrl,
-    siteName: "Faijan Anwar — Blockchain Developer",
-    title: "Faijan Anwar | Blockchain Developer & Smart Contract Engineer",
+    siteName: "Saad Ahmed — Automation Engineer & Systems Architect",
+    title: "Saad Ahmed | Automation Engineer & Systems Architect",
     description:
-      "Building secure DeFi protocols, NFT marketplaces, DAO systems, and scalable Web3 experiences. Available for Web3 contracts and full-time roles.",
+      "Building agentic RPA pipelines, distributed infrastructure, and production-grade LLM integrations. Available for contracts and full-time roles.",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Faijan Anwar — Blockchain Developer & Smart Contract Engineer",
+        alt: "Saad Ahmed — Automation Engineer & Systems Architect",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Faijan Anwar | Blockchain Developer",
+    title: "Saad Ahmed | Automation Engineer & Systems Architect",
     description:
-      "Building secure DeFi protocols, NFT marketplaces, and scalable Web3 apps.",
+      "Building agentic RPA pipelines, distributed infrastructure, and production-grade LLM integrations.",
     images: ["/og-image.jpg"],
-    creator: "@faijananwar",
+    creator: "@saad_ahmed",
   },
   robots: {
     index: true,

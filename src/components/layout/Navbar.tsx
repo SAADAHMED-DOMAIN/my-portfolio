@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { FiGithub, FiLinkedin, FiTwitter } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiInstagram } from "react-icons/fi";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -36,9 +36,9 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="font-display text-[1.05rem] font-bold tracking-tight text-white flex items-center gap-2.5 group">
           <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[rgba(37,99,235,0.5)] group-hover:border-[var(--color-electric-blue)] transition-colors">
-            <img src="/profile.jpg" alt="Faijan Anwar" className="object-cover w-full h-full" />
+            <img src="/Profilepicture.png" alt="Saad Ahmed" className="object-cover w-full h-full" />
           </div>
-          <span>Faijan Anwar</span>
+          <span>Saad Ahmed</span>
         </Link>
 
         {/* Desktop Nav */}
@@ -57,7 +57,7 @@ export default function Navbar() {
           <div className="h-4 w-px bg-white/10" />
           <div className="flex items-center gap-3">
             <a
-              href="https://github.com/faijananwar"
+              href="https://github.com/SAADAHMED-DOMAIN"
               target="_blank"
               rel="noreferrer"
               className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-white rounded-lg hover:bg-white/5 transition-all"
@@ -65,7 +65,7 @@ export default function Navbar() {
               <FiGithub className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/faijan-anwar/"
+              href="https://www.linkedin.com/in/saad-undefined-b29333413/"
               target="_blank"
               rel="noreferrer"
               className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-[#0a66c2] rounded-lg hover:bg-white/5 transition-all"
@@ -73,12 +73,12 @@ export default function Navbar() {
               <FiLinkedin className="w-4 h-4" />
             </a>
             <a
-              href="https://x.com/faijananwar"
+              href="https://www.instagram.com/saadwithahmed/"
               target="_blank"
               rel="noreferrer"
-              className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-white rounded-lg hover:bg-white/5 transition-all"
+              className="w-8 h-8 flex items-center justify-center text-gray-500 hover:text-pink-400 rounded-lg hover:bg-white/5 transition-all"
             >
-              <FiTwitter className="w-4 h-4" />
+              <FiInstagram className="w-4 h-4" />
             </a>
           </div>
           <Link
@@ -121,14 +121,14 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="mt-4 flex gap-3 px-3">
-                <a href="https://github.com/faijananwar" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white">
+                <a href="https://github.com/SAADAHMED-DOMAIN" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white">
                   <FiGithub className="w-5 h-5" />
                 </a>
-                <a href="https://linkedin.com/in/faijananwar" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#0a66c2]">
+                <a href="https://www.linkedin.com/in/saad-undefined-b29333413/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-[#0a66c2]">
                   <FiLinkedin className="w-5 h-5" />
                 </a>
-                <a href="https://x.com/faijananwar" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-white">
-                  <FiTwitter className="w-5 h-5" />
+                <a href="https://www.instagram.com/saadwithahmed/" target="_blank" rel="noreferrer" className="text-gray-400 hover:text-pink-400">
+                  <FiInstagram className="w-5 h-5" />
                 </a>
               </div>
             </div>

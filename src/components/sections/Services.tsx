@@ -3,25 +3,25 @@ import { ShieldCheck, Cpu, Code as Code2, ArrowRight } from "lucide-react";
 
 const services = [
   {
-    Icon: ShieldCheck,
-    title: "Smart Contract Auditing",
-    subtitle: "Security & QA",
-    description: "Thorough Solidity audits to uncover vulnerabilities, optimize gas costs, and ensure your protocol is mainnet-ready.",
-    bullets: ["Reentrancy & overflow checks", "Access control review", "Gas optimization", "Audit report delivery"],
+    Icon: Cpu,
+    title: "Infrastructure & DevOps",
+    subtitle: "DevOps & Systems",
+    description: "End-to-end systems architecture utilizing Docker containers, Kubernetes orchestrators (K3s), reverse proxy configuration, and secure CI/CD pipelines.",
+    bullets: ["Docker & K3s orchestration", "Nginx reverse proxy design", "GitHub Actions CI/CD workflows", "Centralized logging & metrics"],
   },
   {
-    Icon: Cpu,
-    title: "DeFi Protocol Design",
-    subtitle: "Architecture",
-    description: "End-to-end design of DeFi mechanisms — AMMs, staking, yield farming, and liquidity pools with sound tokenomics.",
-    bullets: ["Protocol architecture", "Tokenomics modeling", "MEV protection", "Mainnet deployment"],
+    Icon: ShieldCheck,
+    title: "Automation & RPA Pipelines",
+    subtitle: "Agentic Systems",
+    description: "High-performance web scrapers, programmatic browser agents, async data workers, and custom web automation routines that eliminate human error.",
+    bullets: ["Multi-channel scraping agents", "ETL pipeline orchestration", "Vision-language model OCR", "Zero-cost data integration"],
   },
   {
     Icon: Code2,
-    title: "Full-Stack dApp Dev",
-    subtitle: "Web3 Engineering",
-    description: "Production-grade decentralized applications from smart contracts to polished React/Next.js frontends.",
-    bullets: ["Smart contract development", "Wallet & chain integration", "Responsive Web3 UI", "Ongoing maintenance"],
+    title: "LLM Systems & AI Integrations",
+    subtitle: "AI Infrastructure",
+    description: "Production-grade LLM routing layers, semantic key-value caching nodes, multi-vector RAG search networks, and custom AI chatbot interfaces.",
+    bullets: ["Semantic KV caching routers", "LiteLLM API aggregation", "Dynamic fallback protocols", "RAG query optimization"],
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Services() {
         </FadeInView>
         <FadeInView delay={0.1} className="mb-14 text-center">
           <p className="text-gray-500 text-sm max-w-md mx-auto">
-            Services I provide to Web3 projects, startups, and protocols looking to build and ship faster.
+            Services I provide to startups, developers, and enterprises looking to automate manual processes and scale their digital architecture.
           </p>
         </FadeInView>
 

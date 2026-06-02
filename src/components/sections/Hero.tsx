@@ -15,9 +15,9 @@ const itemVariants = {
 };
 
 const stats = [
-  { value: "2+", label: "Years in Web3" },
-  { value: "15+", label: "dApps Built" },
-  { value: "200+", label: "Contracts Tested" },
+  { value: "1+", label: "Years in DevOps" },
+  { value: "3+", label: "Systems Built" },
+  { value: "99.9%", label: "Uptime Achieved" },
 ];
 
 export default function Hero() {
@@ -50,9 +50,9 @@ export default function Hero() {
             variants={itemVariants}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-bold tracking-tight mb-6 font-display leading-[1.06]"
           >
-            Building the Future
+            Architecting Order from Chaos | Designing for
             <br />
-            <span className="text-gradient">on the Blockchain</span>
+            <span className="text-gradient">Possibilities & Adaptability</span>
           </motion.h1>
 
           {/* Sub-headline */}
@@ -60,8 +60,8 @@ export default function Hero() {
             variants={itemVariants}
             className="max-w-2xl text-base sm:text-lg md:text-xl text-gray-400 mb-10 leading-relaxed"
           >
-            Blockchain Developer & Smart Contract Engineer — crafting secure DeFi protocols,
-            scalable dApps, and frictionless Web3 experiences that users actually love.
+            Automation Engineer & Systems Architect — crafting agentic RPA pipelines,
+            distributed infrastructure, and production-grade LLM integrations that scale.
           </motion.p>
 
           {/* CTA Buttons */}

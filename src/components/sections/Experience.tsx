@@ -2,34 +2,28 @@ import FadeInView from "@/components/ui/FadeInView";
 
 const experiences = [
   {
-    title: "Smart Contract Development",
-    period: "2023 – Present",
-    description: "Architecting and auditing secure smart contracts using Solidity, Foundry, and Hardhat. Implementing ERC standards, proxy patterns, and robust access controls for high-stakes decentralized applications.",
-    tags: ["Solidity", "Foundry", "OpenZeppelin", "ERC Standards"],
+    title: "Freelance Automation & Systems Engineer",
+    period: "2026 – Present",
+    description: "Developing configuration-driven LLM Routers that cut TTFT latency by up to 90% via semantic KV caching. Maximizing application uptime to 99.9% and reducing API costs by 50-90% by dynamically routing queries across model tiers.",
+    tags: ["Python", "Docker", "Redis", "LiteLLM", "Nginx"],
   },
   {
-    title: "Full-Stack Web3 Applications",
-    period: "2022 – Present",
-    description: "Building end-to-end dApps using Next.js, React, Ethers.js, and viem. Integrating wallet connections, off-chain indexing via The Graph, and seamless UX for on-chain interactions.",
-    tags: ["Next.js", "Ethers.js", "viem", "Wagmi"],
+    title: "Agentic ETL & Data Pipeline Engineering",
+    period: "2025 – 2026",
+    description: "Built 'Sieve', an agentic ETL data pipeline featuring webhook triggers, programmatic web scraping, asynchronous CRUD, universal conversion, and vision-language model OCR.",
+    tags: ["Python", "n8n", "Skyvern", "PostgreSQL", "Docker"],
   },
   {
-    title: "DeFi Protocol Engineering",
-    period: "2023 – 2024",
-    description: "Developing AMMs, staking mechanisms, and yield farming protocols. Deep understanding of tokenomics, liquidity pool math, MEV protection, and protocol security.",
-    tags: ["DeFi", "AMM", "Tokenomics", "MEV"],
+    title: "RAG & Conversational AI Systems",
+    period: "2025",
+    description: "Architected a custom knowledge-retrieval engine utilizing vector embeddings (RAG) to power an corporate chatbot, complete with a responsive Telegram Bot UI for real-time record lookup.",
+    tags: ["LiteLLM", "Supabase", "Vector DB", "Telegram Bot API"],
   },
   {
-    title: "Blockchain Research",
-    period: "2022 – 2023",
-    description: "Researching Layer 2 scaling solutions, Zero-Knowledge proofs (ZK-Rollups), and cross-chain interoperability protocols to reduce gas costs and improve throughput.",
-    tags: ["L2", "ZK-Proofs", "Cross-chain", "Scaling"],
-  },
-  {
-    title: "Open Source Contributions",
-    period: "2021 – Present",
-    description: "Active contributor to Web3 open-source projects, building developer tooling and publishing educational content for the blockchain community.",
-    tags: ["Open Source", "Developer Tooling", "Education"],
+    title: "Bachelor of Technology — Computer Science Engineering",
+    period: "2024 – 2028",
+    description: "Studying foundational and advanced computer science subjects. Completed Harvard's CS50: Introduction to Computer Science to master computational thinking, memory allocation, and data structures.",
+    tags: ["C", "Python", "SQL", "Algorithms", "Harvard CS50"],
   },
 ];
 

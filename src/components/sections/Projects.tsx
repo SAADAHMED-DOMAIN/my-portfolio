@@ -6,58 +6,31 @@ import { FiGithub } from "react-icons/fi";
 
 const projects = [
   {
-    title: "Decentralized Crowdfunding Platform",
-    description: "Transparent, milestone-based crowdfunding where backers vote on fund releases. Smart contracts ensure trustless fund management with full on-chain transparency.",
-    tech: ["Solidity", "Next.js", "Hardhat", "Ethers.js", "The Graph"],
-    github: "https://github.com/FAIJANANWAR/decentralized-crowdfunding-platform",
-    live: "https://decentralized-crowdfunding-platform-umber.vercel.app/",
+    title: "Sieve — Agentic ETL & Data Pipeline",
+    description: "Developed an agentic, coded orchestration pipeline with webhooks, form submissions, and webhook triggers. Features multi-channel ingestion, async CRUD, VLM OCR, cryptographic hashing, and vector embeddings. Zero Licensing Overhead (ZLO), FOSS Stack, No SaaS footprint & Negligible-Marginal-Cost Dependency Model.",
+    tech: ["JavaScript", "Docker", "PostgreSQL", "Redis", "n8n", "Skyvern"],
+    github: "#",
+    live: "#",
     highlight: true,
     status: "Live",
   },
   {
-    title: "NFT Marketplace Protocol",
-    description: "Fully decentralized marketplace for minting, buying, and selling ERC721 tokens with zero-fee listing architecture and IPFS-stored metadata.",
-    tech: ["Solidity", "React", "IPFS", "Foundry", "Alchemy"],
-    github: "https://github.com/FAIJANANWAR/dao-governance-system",
-    live: "https://dao-governance-system-dao-governanc-flax.vercel.app/",
+    title: "RAG Conversational Bot",
+    description: "Built a custom knowledge-retrieval engine utilizing vector embeddings (RAG) to power an intelligent corporate chatbot with a Telegram Bot API native UI for querying internal database records.",
+    tech: ["JavaScript", "Supabase", "LiteLLM", "Docker", "Telegram API"],
+    github: "#",
+    live: "#",
     highlight: true,
     status: "Live",
   },
   {
-    title: "DAO Governance System",
-    description: "On-chain governance platform using ERC20 votes for proposal creation and execution with timelocks. Full voting dashboard with quorum tracking.",
-    tech: ["Solidity", "TypeScript", "Next.js", "OpenZeppelin", "viem"],
-    github: "https://github.com/FAIJANANWAR/dao-governance-system",
-    live: "https://dao-governance-system-dao-governanc-flax.vercel.app/",
+    title: "Centralized LLM Router",
+    description: "Developed a configuration-driven LLM Router that cuts TTFT latency by up to 90% via semantic KV caching, and reduces input costs by 50-90% through dynamic model tier routing.",
+    tech: ["JavaScript", "Redis", "LiteLLM", "Docker", "Nginx"],
+    github: "#",
+    live: "#",
     highlight: false,
     status: "Live",
-  },
-  {
-    title: "Crypto Portfolio Tracker",
-    description: "Multi-chain wallet analytics dashboard with real-time price feeds, historical performance charts, and DeFi position tracking across chains.",
-    tech: ["Next.js", "TypeScript", "Chart.js", "Moralis", "CoinGecko API"],
-    github: "#",
-    live: "#",
-    highlight: false,
-    status: "In Progress",
-  },
-  {
-    title: "Web3 Freelance Escrow",
-    description: "Trustless milestone-based payment system for freelancers and clients. Approval-based fund release with basic dispute resolution logic on-chain.",
-    tech: ["Solidity", "Hardhat", "React", "Node.js", "Arbitrum"],
-    github: "#",
-    live: "#",
-    highlight: false,
-    status: "In Progress",
-  },
-  {
-    title: "Web3 Airdrop Campaign Manager",
-    description: "Automated token distribution platform with Merkle tree airdrops for scalable, gas-efficient claims, snapshot integration and eligibility checking.",
-    tech: ["Solidity", "Next.js", "MerkleTree.js", "Ethers.js", "Wagmi"],
-    github: "#",
-    live: "#",
-    highlight: false,
-    status: "In Progress",
   },
 ];
 
@@ -78,7 +51,7 @@ export default function Projects() {
         </FadeInView>
         <FadeInView delay={0.1} className="mb-14 text-center">
           <p className="text-gray-500 text-base max-w-xl mx-auto">
-            A selection of Web3 projects spanning DeFi, NFTs, and DAO infrastructure — each built with production-grade security in mind.
+            A selection of automation, data engineering, and LLM systems built for speed, cost savings, and scale.
           </p>
         </FadeInView>
 

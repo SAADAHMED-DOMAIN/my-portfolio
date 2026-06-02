@@ -1,37 +1,39 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send, CircleCheck as CheckCircle, CircleAlert as AlertCircle, Mail, MapPin, Phone } from "lucide-react";
 
 export default function Contact() {
-  const formRef = useRef<HTMLFormElement>(null);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    honeypot: "",
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!formRef.current) return;
     setIsSubmitting(true);
     setStatus("idle");
-
-    const formData = new FormData(formRef.current);
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: formData.get("user_name"),
-          email: formData.get("user_email"),
-          subject: formData.get("subject"),
-          message: formData.get("message"),
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (res.ok) {
         setStatus("success");
-        formRef.current.reset();
+        setFormData({ name: "", email: "", subject: "", message: "", honeypot: "" });
       } else {
         setStatus("error");
       }
@@ -75,14 +77,14 @@ export default function Contact() {
               Let&apos;s build something great together
             </h3>
             <p className="text-gray-400 text-sm leading-relaxed mb-8">
-              Whether you need a smart contract audited, a DeFi protocol architected, or a full dApp built — I&apos;m here to help. Drop a message and I&apos;ll respond promptly.
+              Whether you need an automation pipeline designed, infrastructure orchestrated, or an LLM integration built — I&apos;m here to help. Drop a message and I&apos;ll respond promptly.
             </p>
 
             <div className="flex flex-col gap-5">
               {[
-                { Icon: Mail, label: "Email", value: "hello@faijan.in", href: "mailto:hello@faijan.in" },
-                { Icon: Phone, label: "Phone", value: "+91 70147 02263", href: "tel:7014702263" },
-                { Icon: MapPin, label: "Location", value: "India", href: null },
+                { Icon: Mail, label: "Email", value: "wynorifik@gmail.com", href: "mailto:wynorifik@gmail.com" },
+                { Icon: Phone, label: "Phone", value: "+91 95499 54674", href: "tel:+919549954674" },
+                { Icon: MapPin, label: "Location", value: "Jaipur, India", href: null },
               ].map(({ Icon, label, value, href }) => (
                 <div key={label} className="flex items-center gap-4">
                   <div className="w-10 h-10 rounded-xl bg-[rgba(37,99,235,0.08)] border border-[rgba(37,99,235,0.15)] flex items-center justify-center shrink-0">
@@ -113,36 +115,52 @@ export default function Contact() {
             <div className="mb-4 min-h-[2.5rem]">
               {status === "success" && (
                 <div className="flex items-center gap-2 px-4 py-3 bg-green-500/10 border border-green-500/20 text-green-400 rounded-xl text-sm">
-                  <CheckCircle className="w-4 h-4 shrink-0" /> Message sent! I&apos;ll get back to you soon.
+                  <CheckCircle className="w-4 h-4 shrink-0" /> Thank you! Your message has been sent successfully.
                 </div>
               )}
               {status === "error" && (
                 <div className="flex items-center gap-2 px-4 py-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded-xl text-sm">
-                  <AlertCircle className="w-4 h-4 shrink-0" /> Something went wrong. Please email me directly at hello@faijan.in
+                  <AlertCircle className="w-4 h-4 shrink-0" /> Something went wrong. Please email me directly at wynorifik@gmail.com
                 </div>
               )}
             </div>
 
-            <form ref={formRef} onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-6 sm:p-8 flex flex-col gap-5">
+            <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-6 sm:p-8 flex flex-col gap-5">
+              {/* Anti-Spam Honeypot Field */}
+              <input
+                type="text"
+                name="honeypot"
+                value={formData.honeypot}
+                onChange={handleChange}
+                className="absolute opacity-0 pointer-events-none"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+              />
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div>
-                  <label htmlFor="user_name" className="block text-xs font-medium text-gray-400 mb-2 tracking-wide">Full Name</label>
+                  <label htmlFor="name" className="block text-xs font-medium text-gray-400 mb-2 tracking-wide">Full Name</label>
                   <input
                     type="text"
-                    id="user_name"
-                    name="user_name"
+                    id="name"
+                    name="name"
                     required
+                    value={formData.name}
+                    onChange={handleChange}
                     className={inputClass}
                     placeholder="John Doe"
                   />
                 </div>
                 <div>
-                  <label htmlFor="user_email" className="block text-xs font-medium text-gray-400 mb-2 tracking-wide">Email Address</label>
+                  <label htmlFor="email" className="block text-xs font-medium text-gray-400 mb-2 tracking-wide">Email Address</label>
                   <input
                     type="email"
-                    id="user_email"
-                    name="user_email"
+                    id="email"
+                    name="email"
                     required
+                    value={formData.email}
+                    onChange={handleChange}
                     className={inputClass}
                     placeholder="john@example.com"
                   />
@@ -155,8 +173,10 @@ export default function Contact() {
                   type="text"
                   id="subject"
                   name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   className={inputClass}
-                  placeholder="Smart contract audit, dApp development..."
+                  placeholder="Automation pipeline, infrastructure setup, LLM integration..."
                 />
               </div>
 
@@ -167,6 +187,8 @@ export default function Contact() {
                   name="message"
                   required
                   rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
                   className={`${inputClass} resize-none`}
                   placeholder="Tell me about your project or what you need help with..."
                 />
@@ -178,7 +200,7 @@ export default function Contact() {
                 className="w-full bg-[var(--color-electric-blue)] hover:bg-[var(--color-electric-blue-hover)] text-white rounded-xl px-4 py-3.5 text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed glow"
               >
                 {isSubmitting ? (
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <>Sending... <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /></>
                 ) : (
                   <>Send Message <Send className="w-4 h-4" /></>
                 )}
